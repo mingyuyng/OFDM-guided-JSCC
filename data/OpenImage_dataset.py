@@ -19,9 +19,7 @@ class OpenImageDataset(BaseDataset):
         """
         BaseDataset.__init__(self, opt)
         self.dir_AB = opt.dataroot  # get the image directory
-        self.paths = sorted(make_dataset(self.dir_AB, opt.max_dataset_size))  # get image paths
-        self.input_nc = self.opt.input_nc
-        self.output_nc = self.opt.output_nc
+        self.paths = sorted(make_dataset(self.dir_AB, float("inf")))  # get image paths
 
     def __getitem__(self, index):
         """Return a data point and its metadata information.

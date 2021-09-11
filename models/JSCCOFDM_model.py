@@ -45,12 +45,12 @@ class JSCCOFDMModel(BaseModel):
                                         norm=opt.norm_EG, init_type='kaiming', init_gain=0.02, gpu_ids=self.gpu_ids)
             
         # define networks (both generator and discriminator)
-        self.netE = networks.define_E(input_nc=opt.input_nc, ngf=opt.ngf, max_ngf=opt.max_ngf,
+        self.netE = networks.define_E(input_nc=3, ngf=64, max_ngf=256,
                                       n_downsample=opt.n_downsample, C_channel=opt.C_channel,
                                       n_blocks=opt.n_blocks, norm=opt.norm_EG, init_type='kaiming',
                                       init_gain=0.02, gpu_ids=self.gpu_ids)
 
-        self.netG = networks.define_G(output_nc=opt.output_nc, ngf=opt.ngf, max_ngf=opt.max_ngf,
+        self.netG = networks.define_G(output_nc=3, ngf=64, max_ngf=256,
                                       n_downsample=opt.n_downsample, C_channel=opt.C_channel,
                                       n_blocks=opt.n_blocks, norm=opt.norm_EG, init_type='kaiming',
                                       init_gain=0.02, gpu_ids=self.gpu_ids)

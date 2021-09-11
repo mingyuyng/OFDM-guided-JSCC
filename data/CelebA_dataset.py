@@ -20,10 +20,7 @@ class CelebADataset(BaseDataset):
         """
         BaseDataset.__init__(self, opt)
         self.dir_AB = opt.dataroot  # get the image directory
-        self.paths = sorted(make_dataset(self.dir_AB, opt.max_dataset_size))  # get image paths
-        assert(self.opt.load_size >= self.opt.crop_size)   # crop_size should be smaller than the size of loaded image
-        self.input_nc = self.opt.input_nc
-        self.output_nc = self.opt.output_nc
+        self.paths = sorted(make_dataset(self.dir_AB, float("inf")))  # get image paths
 
     def __getitem__(self, index):
         """Return a data point and its metadata information.
@@ -40,11 +37,11 @@ class CelebADataset(BaseDataset):
         # read a image given a random integer index
         path = self.paths[index]
         img = Image.open(path).convert('RGB')
+        
         # split AB image into A and B
         w, h = img.size
 
         transform = transforms.Compose([
-            #transforms.CenterCrop((178, 178)),
             transforms.CenterCrop((140, 140)),
             transforms.Resize((64, 64)),
             transforms.ToTensor(),
