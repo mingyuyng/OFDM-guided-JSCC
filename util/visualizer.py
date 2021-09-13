@@ -11,7 +11,8 @@ class Visualizer():
         self.opt = opt  # cache the option
         self.name = opt.name
         
-        os.makedirs(os.path.join(opt.checkpoints_dir, opt.name))
+        if not os.path.isdir(os.path.join(opt.checkpoints_dir, opt.name)):
+            os.makedirs(os.path.join(opt.checkpoints_dir, opt.name))
         # create a logging file to store training losses
         self.log_name = os.path.join(opt.checkpoints_dir, opt.name, 'loss_log.txt')
         with open(self.log_name, "w") as log_file:

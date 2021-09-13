@@ -8,11 +8,14 @@ cfg                                              = __C
 
 __C.name                                         = 'JSCC_OFDM'      # Name of the experiment
 __C.gpu_ids                                      = [1]              # GPUs to use
-__C.dataset_mode                                 = 'CIFAR10'  # ['CIFAR10', 'CIFAR100', 'CelebA', 'Openimage']
+__C.dataset_mode                                 = 'OpenImage'  # ['CIFAR10', 'CIFAR100', 'CelebA', 'OpenImage']
 __C.checkpoints_dir                              = './Checkpoints/' + __C.dataset_mode   # Path to store the model
 __C.model                                        = 'JSCCOFDM'
 
 __C.C_channel                                    = 12         # Number of channels for output latents (controls the communication rate)
+                                                              # Calculation of the rate (channel usage per pixel): 
+                                                              #           C_channel / (3 x 2^(2 x n_downsample + 1))
+                                                              
 __C.SNR                                          = 5          # Signal to noise ratio
 __C.SNR_cal                                      = 'ins'      # ['ins', 'avg']. 'ins' is for instantaneous SNR, 'avg' is for average SNR
 __C.feedforward                                  = 'OFDM-CE-sub-EQ-sub'  # Different schemes: 
@@ -34,19 +37,11 @@ if __C.dataset_mode in ['CIFAR10', 'CIFAR100']:
     __C.n_downsample                             = 2          # Downsample times
     __C.n_blocks                                 = 2          # Numebr of residual blocks
     
-    __C.dataroot                                 = './data'
-    __C.size_w                                   = 32
-    __C.size_h                                   = 32
-
 
 elif __C.dataset_mode == 'CelebA':
     __C.n_layers_D                               = 3          # Number of layers in the discriminator. Only used with GAN loss
     __C.n_downsample                             = 3          # Downsample times
     __C.n_blocks                                 = 2          # Numebr of residual blocks
-    
-    __C.dataroot                                 = './data/celeba/CelebA_train'
-    __C.size_w                                   = 64
-    __C.size_h                                   = 64
 
 
 elif __C.dataset_mode == 'OpenImage':
@@ -54,23 +49,10 @@ elif __C.dataset_mode == 'OpenImage':
     __C.n_downsample                             = 3          # Downsample times
     __C.n_blocks                                 = 4          # Numebr of residual blocks
     
-    __C.dataroot                                 = './data/opv6'
-    __C.size_w                                   = 256
-    __C.size_h                                   = 256
 
 __C.norm_D                                       = 'instance' if __C.gan_mode == 'wgangp' else 'batch'   # Type of normalization in Discriminator
 __C.norm_EG                                      = 'batch'        # Type of normalization in Encoder and Generator
 
-
-############################# OFDM configs ####################################
-
-size_latent = (__C.size_w // (2**__C.n_downsample)) * (__C.size_h // (2**__C.n_downsample)) * (__C.C_channel // 2)
-__C.P                                            = 1                                   # Number of symbols
-__C.M                                            = 64                                  # Number of subcarriers per symbol
-__C.K                                            = 16                                  # Length of CP
-__C.L                                            = 8                                   # Number of paths
-__C.decay                                        = 4                                   # Exponential decay for the multipath channel
-__C.S                                            = size_latent // __C.M                # Number of packets
 
 
 ############################# Display and saving configs ####################################

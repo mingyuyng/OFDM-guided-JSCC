@@ -20,6 +20,7 @@ class OpenImageDataset(BaseDataset):
         BaseDataset.__init__(self, opt)
         self.dir_AB = opt.dataroot  # get the image directory
         self.paths = sorted(make_dataset(self.dir_AB, float("inf")))  # get image paths
+        self.opt = opt
 
     def __getitem__(self, index):
         """Return a data point and its metadata information.
@@ -39,10 +40,15 @@ class OpenImageDataset(BaseDataset):
         # split AB image into A and B
         w, h = img.size
         
-        transform = transforms.Compose([
-            transforms.RandomCrop(256, pad_if_needed=True),
-            transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+        if self.opt.isTrain:
+            transform = transforms.Compose([
+                transforms.RandomCrop(256, pad_if_needed=True),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+        else:
+            transform = transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
         # apply the same transform to both A and B
         img = transform(img)

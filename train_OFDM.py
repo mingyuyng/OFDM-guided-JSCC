@@ -82,11 +82,6 @@ for epoch in range(cfg.epoch_count, cfg.n_epochs + cfg.n_epochs_decay + 1):    #
             losses = model.get_current_losses()
             t_comp = (time.time() - iter_start_time)
             visualizer.print_current_losses(epoch, epoch_iter, losses, t_comp, t_data)
-
-        if total_iters % cfg.save_latest_freq == 0:   # cache our latest model every <save_latest_freq> iterations
-            print('saving the latest model (epoch %d, total_iters %d)' % (epoch, total_iters))
-            save_suffix = 'iter_%d' % total_iters if cfg.save_by_iter else 'latest'
-            model.save_networks(save_suffix)
         iter_data_time = time.time()
 
     if epoch % cfg.save_epoch_freq == 0:              # cache our model every <save_epoch_freq> epochs
