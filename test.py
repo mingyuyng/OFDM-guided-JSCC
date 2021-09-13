@@ -11,7 +11,7 @@ import torchvision
 import torchvision.transforms as transformsn
 from pytorch_msssim import ssim, ms_ssim, SSIM, MS_SSIM
 import sys
-from config_test import cfg
+from configs.config_test import cfg
 
 
 if cfg.dataset_mode == 'CIFAR10':

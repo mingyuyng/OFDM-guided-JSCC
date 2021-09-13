@@ -5,7 +5,7 @@ from util.visualizer import Visualizer
 import torch
 import torchvision
 import torchvision.transforms as transforms
-from config_train import cfg
+from configs.config_train import cfg
 
 # Create dataloaders
 if cfg.dataset_mode == 'CIFAR10':

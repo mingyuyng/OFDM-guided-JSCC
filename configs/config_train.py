@@ -1,5 +1,5 @@
 from easydict import EasyDict as edict
-from config import cfg
+from configs.config import cfg
 
 __T                                              = cfg
 
