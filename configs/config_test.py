@@ -23,8 +23,8 @@ elif __E.dataset_mode == 'OpenImage':
     __E.size_w                                   = 512
     __E.size_h                                   = 768                                  
 
-__E.verbose = False
-__E.serial_batches = True
+__E.verbose                                      = False
+__E.serial_batches                               = True
 __E.isTrain                                      = False     
 __E.image_out_path                               = './Images/' + __E.dataset_mode + '/' + __E.name
 if not os.path.exists(__E.image_out_path):
@@ -35,7 +35,7 @@ else:
 
 __E.num_test                                     = 500         # Number of images to test
 __E.how_many_channel                             = 1           # Number of channel realizations per image
-__E.epoch                                        = 'latest'
+__E.epoch                                        = 'latest'    # Each model to use for testing
 __E.load_iter                                    = 0
 
 
